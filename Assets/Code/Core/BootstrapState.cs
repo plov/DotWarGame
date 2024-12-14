@@ -2,11 +2,11 @@ using Cysharp.Threading.Tasks;
 using Code.Scenes;
 using Code.PostponedTasks;
 using Code.Core.StateMachine;
-using Code.Core.StateMachine.States;
+using Code.Core.StateMachine.Phases;
 
 namespace Code.Core
 {
-    public class BootstrapState : IGameState, IEnterState
+    public class BootstrapState : IGamePhase, IEnterPhase
     {
         private readonly IGameStateMachine _stateMachine;
         private readonly ISceneLoader _loader;

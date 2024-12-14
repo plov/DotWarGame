@@ -1,4 +1,4 @@
-﻿using Code.Core.StateMachine.States;
+﻿using Code.Core.StateMachine.Phases;
 
 namespace Code.Core.StateMachine
 {

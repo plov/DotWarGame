@@ -30,7 +30,7 @@ namespace code
             Container.FullBind<BootstrapState>();
             Container.FullBind<GameLoopState>();
             Container.FullBind<LoadSceneState>();
-            //Container.FullBind<LoadArenaState>();
+            Container.FullBind<LoadSettingsState>();
         }
     }
 }

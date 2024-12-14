@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Code.Core.StateMachine.States;
+using Code.Core.StateMachine.Phases;
 
 namespace Code.Core.StateMachine
 {
@@ -24,11 +24,11 @@ namespace Code.Core.StateMachine
             _states.Add(state.GetType(), state);
         }
 
-        public void Enter<TState>() where TState : class, T, IEnterState
+        public void Enter<TState>() where TState : class, T, IEnterPhase
         {
             Switch<TState>();
 
-            if (_state is IEnterState enterState)
+            if (_state is IEnterPhase enterState)
                 enterState.Enter();
         }
 
@@ -37,7 +37,7 @@ namespace Code.Core.StateMachine
             var next = _states[typeof(TState)];
             Logger.LogEnter(next, _state);
 
-            if (_state is IExitState exitState)
+            if (_state is IExitPhase exitState)
                 exitState.Exit();
 
             _state = next;

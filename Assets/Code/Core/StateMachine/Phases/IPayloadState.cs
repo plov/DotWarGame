@@ -1,4 +1,4 @@
-namespace Code.Core.StateMachine.States
+namespace Code.Core.StateMachine.Phases
 {
     public interface IPayloadState<in T>
     {

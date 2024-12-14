@@ -8,5 +8,6 @@
     public static readonly DSender SceneData = new(name: "[Scene Data]");
     public static readonly DSender Postponer = new(name: "[Postponer]");
     public static readonly DSender Localization = new(name: "[Localization]");
+    public static readonly DSender UI = new(name: "[UI]".Blue());
   }
 }

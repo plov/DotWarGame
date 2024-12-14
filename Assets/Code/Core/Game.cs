@@ -1,18 +1,17 @@
 using System.Collections.Generic;
 using Code.SmartDebug;
 using Code.Core.StateMachine;
-using Code.Core.StateMachine.States;
-
+using Code.Core.StateMachine.Phases;
 using Zenject;
 
 namespace Code.Core
 {
     public class Game: IInitializable
     {
-        private readonly List<IGameState> _states;
+        private readonly List<IGamePhase> _states;
         private readonly IGameStateMachine _stateMachine;
 
-        public Game(IGameStateMachine stateMachine, List<IGameState> states)
+        public Game(IGameStateMachine stateMachine, List<IGamePhase> states)
         {
             _states = states;
             _stateMachine = stateMachine;
@@ -26,7 +25,7 @@ namespace Code.Core
 
         private void InitStateMachine()
         {
-            foreach (IGameState state in _states)
+            foreach (IGamePhase state in _states)
                 _stateMachine.RegisterState(state);
         }
 

@@ -1,9 +1,9 @@
+using Code.Core.StateMachine.Phases;
 using Code.PlayerInput;
-using Code.Core.StateMachine.States;
 
 namespace Code.Core
 {
-  public class GameLoopState : IGameState, IEnterState, IExitState
+  public class GameLoopState : IGamePhase, IEnterPhase, IExitPhase
   {
     private readonly IInput _input;
 
