@@ -24,7 +24,7 @@ namespace Code.Core
                     .Wait(ShowSplashScreen)
                     .Do(LoadMain);
             else
-                LoadMain(); 
+                LoadMain();
         }
 
         private static async UniTask ShowSplashScreen() =>

@@ -5,6 +5,7 @@ using Code.Scenes;
 using Code.Extensions;
 using Code.PlayerInput;
 using Zenject;
+using Zenject.SpaceFighter;
 
 namespace code
 {
@@ -31,6 +32,7 @@ namespace code
             Container.FullBind<GameLoopState>();
             Container.FullBind<LoadSceneState>();
             Container.FullBind<LoadSettingsState>();
+            Container.FullBind<LoadLevelState>();
         }
     }
 }

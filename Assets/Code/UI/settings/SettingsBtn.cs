@@ -3,7 +3,7 @@ using Code.Core.StateMachine;
 using Code.SmartDebug;
 using Zenject;
 
-namespace Code.UI
+namespace Code.UI.Settings
 {
     public class SettingsBtn : BaseBtn
     {
