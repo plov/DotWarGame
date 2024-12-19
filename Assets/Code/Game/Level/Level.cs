@@ -1,10 +1,8 @@
-using Code.Core;
-using Code.Scenes;
 using Code.SmartDebug;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Code.Game
+namespace Code.Game.Level
 {
     public class Level : MonoBehaviour
     {

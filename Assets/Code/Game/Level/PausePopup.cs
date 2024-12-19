@@ -1,4 +1,3 @@
-using System;
 using Code.Core;
 using Code.Core.StateMachine;
 using Code.Scenes;
@@ -6,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Code.Game
+namespace Code.Game.Level
 {
     public class PausePopup : MonoBehaviour
     {
