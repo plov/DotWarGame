@@ -9,7 +9,7 @@ namespace Code.Extensions
       container.BindInterfacesAndSelfTo<T>().FromInstance(instance).AsSingle().NonLazy();
     }
 
-    public static void BindService<T>(this DiContainer container)
+    public static void BindServiceNLazy<T>(this DiContainer container)
     {
       container.BindInterfacesTo<T>().AsSingle().NonLazy();
     }

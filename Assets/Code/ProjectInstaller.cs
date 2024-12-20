@@ -3,7 +3,9 @@ using Code.Core.StateMachine;
 using Code.AssetsManagement;
 using Code.Scenes;
 using Code.Extensions;
+using Code.Game.Data;
 using Code.PlayerInput;
+using UnityEngine.InputSystem;
 using Zenject;
 using Zenject.SpaceFighter;
 
@@ -15,19 +17,20 @@ namespace code
         {
             BindGameStateMachine();
 
-            Container.BindService<Game>();
+            Container.BindServiceNLazy<Game>();
+            Container.BindServiceNLazy<GameStateData>();
             //Container.BindService<GameData>();
-            Container.BindService<SceneLoader>();
-            Container.BindService<Input>();
-            Container.BindService<BuildersFactory>();
-            Container.BindService<AssetProvider>();
+            Container.BindServiceNLazy<SceneLoader>();
+            Container.BindServiceNLazy<Input>();
+            Container.BindServiceNLazy<BuildersFactory>();
+            Container.BindServiceNLazy<AssetProvider>();
             //Container.BindService<AudioPlayer>();
             
         }
 
         private void BindGameStateMachine()
         {
-            Container.BindService<GameStateMachine>();
+            Container.BindServiceNLazy<GameStateMachine>();
             Container.FullBind<BootstrapState>();
             Container.FullBind<GameLoopState>();
             Container.FullBind<LoadSceneState>();

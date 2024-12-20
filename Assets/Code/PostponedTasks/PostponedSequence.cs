@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using Code.Extensions;
-using Code.PostponedTasks;
+using Cysharp.Threading.Tasks;
 
-namespace Utils.PostponedTasks
+namespace Code.PostponedTasks
 {
   public class PostponedSequence
   {

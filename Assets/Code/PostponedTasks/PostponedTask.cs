@@ -4,46 +4,46 @@ using Cysharp.Threading.Tasks;
 
 namespace Code.PostponedTasks
 {
-  public class PostponedTask
-  {
-    private readonly List<Action> _onComplete = new();
-    private readonly Func<UniTask> _task;
-
-    public PostponedTask(Func<UniTask> task)
+    public class PostponedTask
     {
-      _task = task;
-    }
+        private readonly List<Action> _onComplete = new();
+        private readonly Func<UniTask> _task;
 
-    public async UniTask Activate()
-    {
-      try
-      {
-        await _task();
-      }
-      catch (Exception e)
-      {
-        PostponerError.Log(e);
-      }
-
-      Complete();
-    }
-
-    public void OnComplete(Action action) =>
-      _onComplete.Add(action);
-
-    private void Complete()
-    {
-      foreach (Action action in _onComplete)
-      {
-        try
+        public PostponedTask(Func<UniTask> task)
         {
-          action();
+            _task = task;
         }
-        catch (Exception e)
+
+        public async UniTask Activate()
         {
-          PostponerError.Log(e);
+            try
+            {
+                await _task();
+            }
+            catch (Exception e)
+            {
+                PostponerError.Log(e);
+            }
+
+            Complete();
         }
-      }
+
+        public void OnComplete(Action action) =>
+            _onComplete.Add(action);
+
+        private void Complete()
+        {
+            foreach (Action action in _onComplete)
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception e)
+                {
+                    PostponerError.Log(e);
+                }
+            }
+        }
     }
-  }
 }
