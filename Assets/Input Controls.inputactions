@@ -1,0 +1,51 @@
+{
+    "name": "Input Controls",
+    "maps": [
+        {
+            "name": "Level",
+            "id": "1abeea9c-6108-4915-9e65-c485724fca3e",
+            "actions": [
+                {
+                    "name": "LMB",
+                    "type": "Button",
+                    "id": "74b08d0f-954d-4b4e-8aab-1184dd349bc6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "312cb1b9-e56f-42ef-a79a-59f682b858f8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";mouse and keyboard",
+                    "action": "LMB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "mouse and keyboard",
+            "bindingGroup": "mouse and keyboard",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

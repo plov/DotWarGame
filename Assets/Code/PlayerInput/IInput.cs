@@ -1,5 +1,6 @@
 ﻿using UnityEngine.EventSystems;
 using Code.Observing.Subscribers;
+using Code.PlayerInput;
 
 namespace Code.PlayerInput
 {
@@ -7,10 +8,7 @@ namespace Code.PlayerInput
   {
     EventSystem EventSystem { get; }
     bool Enabled { set; }
-    Actions.PlayerActions Main { get; }
+    InputControls.LevelActions Main { get; }
     ISubscriber<InputContext> OnAct { get; }
-    ISubscriber<InputContext> OnLoadShop { get; }
-    ISubscriber<InputContext> OnLoadArena { get; }
-    ISubscriber<InputContext> OnAddSouls { get; }
   }
 }
