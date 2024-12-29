@@ -1,6 +1,5 @@
 ﻿using UnityEngine.EventSystems;
 using Code.Observing.Subscribers;
-using Code.PlayerInput;
 
 namespace Code.PlayerInput
 {

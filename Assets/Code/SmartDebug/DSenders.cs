@@ -9,5 +9,6 @@
     public static readonly DSender Postponer = new(name: "[Postponer]");
     public static readonly DSender Localization = new(name: "[Localization]");
     public static readonly DSender UI = new(name: "[UI]".Blue());
+    public static readonly DSender LEVEL = new(name: "[UI]".Red());
   }
 }

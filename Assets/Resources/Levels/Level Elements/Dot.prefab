@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7755210950914450984}
   - component: {fileID: 6208604866151577183}
-  - component: {fileID: 6357930131515212881}
+  - component: {fileID: 2311204088952046633}
   m_Layer: 0
   m_Name: Dot
-  m_TagString: Untagged
+  m_TagString: Selectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,8 +51,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dotPrefab: {fileID: 0}
---- !u!61 &6357930131515212881
-BoxCollider2D:
+  Id: 0
+--- !u!58 &2311204088952046633
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -86,17 +87,7 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.5
 --- !u!1 &5418353186044841671
 GameObject:
   m_ObjectHideFlags: 0

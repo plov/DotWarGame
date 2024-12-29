@@ -1,144 +1,81 @@
-using System;
+
+using System.Collections.Generic;
+using Code.Core.Communication;
+using Code.Game.Level.Ways;
 using Code.SmartDebug;
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Code.Game.Level
 {
-    public class Level : MonoBehaviour, IPointerMoveHandler
+    public class Level : MonoBehaviour
     {
-        public LineRenderer lineRenderer;
-        private bool _isDrawing = false;
-        private Vector3 _startPoint;
-        private string _startDotName = String.Empty;
+        private List<GameObject> _ways = new List<GameObject>();
+        private WayCreator _wayCreator;
+         
 
         [SerializeField] private GameObject pauseBtnObj;
         private Button _pauseBtn;
         [SerializeField] private GameObject pausePopupObj;
         [SerializeField] private GameObject[] dotPrefabsObj;
-
-
-        public Vector3[] pathPoints;
-        public float duration = 5f; // Duration of the path animation
-
+        [SerializeField] private GameObject wayPrefab;
+        [SerializeField] private GameObject wayCreatorPrefab;
+        [SerializeField] private  Canvas canvas;
+        
         private void Awake()
         {
+            Subscribe();
+            WayCreatorInit();
             _pauseBtn = pauseBtnObj.GetComponent<Button>();
             _pauseBtn.onClick.AddListener(PauseBtnClick);
-
-            foreach (var dot in dotPrefabsObj)
-            {
-                dot.GetComponent<DotView>().PointerDown += OnPointerDown;
-                dot.GetComponent<DotView>().PointerUp += OnPointerUp;
-            }
-
-            // try
-            // {
-            //     GameObject gobj = GetGameObjectWithName("Dot1");
-            //     gobj.GetComponent<DotView>().LeftMouseDown += OnLeftMouseDown;
-            // }
-            // catch (Exception e)
-            // {
-            //     Console.WriteLine(e);
-            //     throw;
-            // }
         }
 
-        protected void PauseBtnClick()
+        private void WayCreatorInit()
+        {
+            GameObject wayCreatorObject = Instantiate(wayCreatorPrefab);
+            _wayCreator = wayCreatorObject.GetComponent<WayCreator>();
+            _wayCreator.wayPrefab = wayPrefab;
+            _wayCreator.canvas = canvas;
+        }
+
+        public void OnDestroy()
+        {
+            Unsubscribe();
+        }
+
+        private void Subscribe()
+        {
+            GameEventBus.Subscribe(GameEvents.DotUp, OnPointerUp);
+        }
+
+        private void Unsubscribe()
+        {
+            GameEventBus.Unsubscribe(GameEvents.DotUp, OnPointerUp);
+        }
+
+        private void PauseBtnClick()
         {
             DLogger.Message(DSenders.UI).WithText("Level PauseBtn clicked").Log();
             pausePopupObj.SetActive(true);
         }
 
-        private void Start()
+        private void OnPointerUp(object data)
         {
-            // pathPoints = new Vector3[]
-            // {
-            //     testObj.transform.position,   // Start
-            //     new Vector3(100, 100, 0),   // First waypoint
-            //     new Vector3(100, 50, 0),  // Second waypoint
-            //     new Vector3(80, 150, 0)    // Final destination
-            // };
-            //
-            // testObj.transform.DOPath(pathPoints, duration, PathType.CatmullRom)
-            //     .SetOptions(false) // Optionally, false to not close the loop
-            //     .SetEase(Ease.Linear) // Linear movement
-            //     .OnComplete(() => Debug.Log("Path animation completed"));
-        }
-
-        private void OnPointerDown(DotView unit)
-        {
-            _startDotName = unit.name;
-            //unit.GetComponent<DotView>().gameObject.SetActive(false);
-            _startPoint = unit.GetComponent<DotView>().gameObject.transform.position;
-            _isDrawing = true;
-            Vector3 startPos = Camera.main.ScreenToWorldPoint(new Vector3(_startPoint.x, _startPoint.y, 10f));
-            lineRenderer.positionCount = 2;
-            lineRenderer.SetPosition(0, startPos);
-            lineRenderer.SetPosition(1, startPos);
-            Debug.Log("startPos " + startPos);
-        }
-
-        private void OnPointerUp(DotView unit)
-        {
-            //unit.GetComponent<DotView>().gameObject.SetActive(true);
-            Debug.Log("is drawing - false");
-            _isDrawing = false;
-        }
-
-        private void Update()
-        {
-        }
-
-        public void OnPointerMove(PointerEventData eventData)
-        {
-            if (!_isDrawing)
+            var dot = (data) as DotView;
+            if (dot != null)
             {
-                return;
+                dot.Select();
+                
+                CreateWay(dot);
             }
-
-            Debug.Log("is drawing - true");
-            Vector3 currentPoint =
-                Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, 10f));
-
-            // Update the end point of the line
-            lineRenderer.SetPosition(1, currentPoint);
-            CheckAnotherDot(currentPoint);
         }
 
-        private void CheckAnotherDot(Vector3 point)
+        private void CreateWay(DotView dot)
         {
-            foreach (var dot in dotPrefabsObj)
+            var dotObject = _wayCreator.Process(dot);
+            if (dotObject != null)
             {
-                if (_startDotName != dot.name)
-                {
-                    var dotPos = dot.transform.position;
-                    var dotWorldPos =Camera.main.ScreenToWorldPoint(new Vector3(dotPos.x, dotPos.y, 10f));
-                    float distance = Vector3.Distance(point, dotWorldPos);
-                    Debug.Log("distance" + distance);
-                    if (distance < 0.6f)
-                    {
-                        var transform = dot.transform.Find("bg");
-                        var gameObj = transform.gameObject;
-                        var image = gameObj.GetComponent<Image>();
-                        if (image != null)
-                        {
-                            image.color = Color.red;
-                        }
-                    }
-                    else
-                    {
-                        var transform = dot.transform.Find("bg");
-                        var gameObj = transform.gameObject;
-                        var image = gameObj.GetComponent<Image>();
-                        if (image != null)
-                        {
-                            image.color = new Color(13f / 255f, 243f / 255f, 237f / 255f, 1f);
-                        }
-                    }
-                }
+                _ways.Add(dotObject);
             }
         }
     }

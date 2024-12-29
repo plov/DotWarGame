@@ -17,14 +17,17 @@ namespace Code.Scenes
     {
       //await _canvas.DOFade(1, MainConfig.LoadingScreen).WithCancellation(this.GetCancellationTokenOnDestroy());
       _canvas.transform.position = new Vector3(-1000, -1000, 0);
-      await _canvas.transform.DOMove(new Vector3(960, 540, 0), MainConfig.LoadingScreen).WithCancellation(this.GetCancellationTokenOnDestroy());
+      _canvas.alpha = 1;
+      await _canvas.transform.DOMove(new Vector3(960, 540, 0), MainConfig.LoadingScreen)
+        .WithCancellation(this.GetCancellationTokenOnDestroy());
     }
 
     public async UniTask Fade()
     {
       //await _canvas.DOFade(0, MainConfig.LoadingScreen).WithCancellation(this.GetCancellationTokenOnDestroy());
       _canvas.transform.position = new Vector3(960, 540, 0);
-      await _canvas.transform.DOMove(new Vector3(-1000, -1000, 0), MainConfig.LoadingScreen).WithCancellation(this.GetCancellationTokenOnDestroy());
+      await _canvas.transform.DOMove(new Vector3(-1000, -1000, 0), MainConfig.LoadingScreen)
+        .WithCancellation(this.GetCancellationTokenOnDestroy());
     }
       
   }
