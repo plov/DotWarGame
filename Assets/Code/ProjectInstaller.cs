@@ -4,6 +4,7 @@ using Code.AssetsManagement;
 using Code.Scenes;
 using Code.Extensions;
 using Code.Game.Data;
+using Code.Game.Level;
 using Code.PlayerInput;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -18,8 +19,9 @@ namespace code
             BindGameStateMachine();
 
             Container.BindServiceNLazy<Game>();
-            Container.BindServiceNLazy<GameStateData>();
-            //Container.BindService<GameData>();
+            Container.Bind<GameData>().AsSingle();
+            Container.Bind<LevelFactory>().AsSingle();
+            Container.BindServiceNLazy<LevelFactory>();
             Container.BindServiceNLazy<SceneLoader>();
             Container.BindServiceNLazy<Input>();
             Container.BindServiceNLazy<BuildersFactory>();

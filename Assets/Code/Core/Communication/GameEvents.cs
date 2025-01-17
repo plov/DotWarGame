@@ -5,10 +5,11 @@ namespace Code.Core.Communication
         //Dots
         public const string DotPress = "DotPress";
         public const string DotUp = "DotUp";
-        public const string Deselect = "Deselect";
+        public const string DeselectDots= "DeselectDots";
         
         //Ways
         public const string WayStart = "WayStart";
-        public static string WayFinished = "WayFinished";
+        public const string WayFinished = "WayFinished";
+        
     }
 }

@@ -51,7 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc10b29633146fa90908134f1cfb9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
   drawDuration: 2
 --- !u!120 &444050054278281857
 LineRenderer:
@@ -103,7 +102,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 150.4285
     widthCurve:
       serializedVersion: 2
       m_Curve:

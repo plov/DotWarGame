@@ -10,5 +10,7 @@
     public static readonly DSender Localization = new(name: "[Localization]");
     public static readonly DSender UI = new(name: "[UI]".Blue());
     public static readonly DSender LEVEL = new(name: "[UI]".Red());
+    public static readonly DSender EDITOR = new(name: "[EDTOR]".Cyan());
+    public static readonly DSender GAMEPLAY = new(name: "[EDGAMEPLAYTOR]".Green());
   }
 }

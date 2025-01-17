@@ -1,4 +1,5 @@
 using Code.Core.Communication;
+using Code.Game.Data;
 using Code.SmartDebug;
 using DG.Tweening;
 using UnityEngine;
@@ -8,15 +9,14 @@ namespace Code.Game.Level.Ways
     public class WayView : MonoBehaviour
     {
         private LineRenderer _lineRenderer;
-        public Canvas canvas;
         private Vector3[] _linePoints;
-        public DotView DotView1 { get; set; }
-        public DotView DotView2 { get; private set; }
+        public Vector3 StartPosition { get; set; }
+        public Vector3 EndPosition { get; private set; }
         public float drawDuration = 2f;
 
-        public void SetDotView2(DotView dotView)
+        public void SetDotView2(DotData dot)
         {
-            DotView2 = dotView;
+            EndPosition = dot.position;
             DLogger.Message(DSenders.LEVEL).WithText("DotView2 saved").Log();
             StartAnimation();
         }
@@ -29,12 +29,16 @@ namespace Code.Game.Level.Ways
             _lineRenderer.endColor = Color.white;
             _lineRenderer.startWidth = 0.1f;
             _lineRenderer.endWidth = 0.1f;
+            _lineRenderer.useWorldSpace = true;
+            _lineRenderer.sortingOrder = 100;
+            _lineRenderer.sortingLayerName = "Default";
             
             _linePoints = new Vector3[2];
-            _linePoints[0] = DotView1.transform.position; 
-            _linePoints[1] = DotView2.transform.position;
+            _linePoints[0] = StartPosition + new Vector3(0, 0, -0.01f);
+            _linePoints[1] = EndPosition + new Vector3(0, 0, -0.01f);
             
             _lineRenderer.positionCount = _linePoints.Length;
+            
             _lineRenderer.SetPosition(0, _linePoints[0]);
             _lineRenderer.SetPosition(1, _linePoints[0]);
             
@@ -43,20 +47,12 @@ namespace Code.Game.Level.Ways
 
         public void Start()
         {
-            GameEventBus.Subscribe(GameEvents.WayFinished, OnWayFinished);
-            //GameEventBus.Subscribe(GameEvents.WayStart, OnWayStart);
         }
 
         public void OnDestroy()
         {
-            GameEventBus.Unsubscribe(GameEvents.WayFinished, OnWayFinished);
-            //GameEventBus.Unsubscribe(GameEvents.WayStart, OnWayStart);
         }
 
-        private void OnWayFinished(object obj)
-        {
-            throw new System.NotImplementedException();
-        }
         
         void DrawLine(Vector3 start, Vector3 end, float duration)
         {

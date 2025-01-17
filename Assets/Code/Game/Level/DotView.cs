@@ -1,25 +1,32 @@
-using System;
 using Code.SmartDebug;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Code.Core.Communication;
+using Code.Game.Data;
+using Code.Game.EventData;
 
 namespace Code.Game.Level
 {
     public class DotView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        [SerializeField] private GameObject dotPrefab;
-        public int Id;
+        public string id;
+        private float _scale;
 
         public void Start()
         {
-            GameEventBus.Subscribe(GameEvents.WayFinished, Deselect);
+            _scale = transform.localScale.x;
+            Subscribe();
+        }
+
+        private void Subscribe()
+        {
+            GameEventBus.Subscribe(GameEvents.DeselectDots, Deselect);
         }
 
         public void OnDestroy()
         {
-            GameEventBus.Unsubscribe(GameEvents.WayFinished, Deselect);
+            GameEventBus.Unsubscribe(GameEvents.DeselectDots, Deselect);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -30,20 +37,25 @@ namespace Code.Game.Level
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            DLogger.Message(DSenders.UI).WithText(" Dot"+Id+" Up").Log();
+            DLogger.Message(DSenders.UI).WithText(" Dot"+id+" Up").Log();
             Select();
             GameEventBus.Trigger(GameEvents.DotUp, this);
         }
 
         public void Select()
         {
-            transform.DOScale(new Vector3(1.3f, 1.3f, 0), 0.4f).SetEase(Ease.InOutElastic);
+            var scale = _scale * 1.3f;
+            transform.DOScale(new Vector3(scale, scale, 0), 0.4f).SetEase(Ease.InOutElastic);
         }
 
         private void Deselect(object data)
         {
-            DLogger.Message(DSenders.LEVEL).WithText("Button deselected").Log();
-            transform.DOScale(new Vector3(1f, 1f, 0), 0.4f).SetEase(Ease.InElastic);
+            if ((data as WayEventData)?.Dot1.Id == id || (data as WayEventData)?.Dot2.Id == id)
+            {
+                DLogger.Message(DSenders.LEVEL).WithText("Button deselected").Log();
+                var scale = _scale;
+                transform.DOScale(new Vector3(scale, scale, 0), 0.4f).SetEase(Ease.InElastic);
+            }
         }
     }
 }
